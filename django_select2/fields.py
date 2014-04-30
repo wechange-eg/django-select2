@@ -474,11 +474,12 @@ class HeavySelect2FieldBaseMixin(object):
             t1 = util.timer_start('HeavySelect2FieldBaseMixin.__init__')
 
         data_view = kwargs.pop('data_view', None)
+        data_url = kwargs.pop('data_url', None)
         choices = kwargs.pop('choices', [])
 
         kargs = {}
         if kwargs.get('widget', None) is None:
-            kargs['widget'] = self.widget(data_view=data_view)
+            kargs['widget'] = self.widget(data_view=data_view, data_url=data_url)
 
         kargs.update(kwargs)
         super(HeavySelect2FieldBaseMixin, self).__init__(*args, **kargs)
