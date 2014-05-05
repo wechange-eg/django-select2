@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 import codecs
 import os
@@ -197,4 +196,5 @@ setup(
         "Django>=1.4",
         'six',
     ],
+    zip_safe=False
 )
