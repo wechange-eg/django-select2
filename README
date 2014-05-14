@@ -28,6 +28,43 @@ Documentation
 
 Documentation available at http://django-select2.readthedocs.org/.
 
+## Returning custom retrieved and styled django-select2 results as HTML from the backend
+
+If you wish to return HTML from your Select2View in get_results(self, request, term, page, context), you need to disable escaeping Markup in the select2 field.
+
+You can do this by setting this option in your custom Select2Field's init function. Example:
+
+```python 
+from django_select2 import HeavyModelSelect2MultipleChoiceField
+from django_select2.util import JSFunction
+
+class UserSelect2MultipleChoiceField(HeavyModelSelect2MultipleChoiceField):
+    queryset = User.objects
+    data_view = UserSelect2View
+    
+    def __init__(self, *args, **kwargs):
+        super(UserSelect2MultipleChoiceField, self).__init__(*args, **kwargs)
+        """ Enable returning HTML formatted results in django-select2 return views.
+            Note: You are responsible for cleaning the content, i.e. with  django.utils.html.escape()! """
+        self.widget.options['escapeMarkup'] = JSFunction('function(m) { return m; }')
+        
+        
+
+from django_select2 import Select2View, NO_ERR_RESP
+from django.db.models import Q
+
+class UserSelect2View(Select2View):
+
+    def get_results(self, request, term, page, context):
+        users = User.objects.filter(
+            Q(first_name__icontains=term) |
+            Q(last_name__icontains=term)
+        ) 
+        results = [(user.id, render_to_string('user_select_pill.html', {'text':escape(user.first_name) + " " + escape(user.last_name)}),)
+                   for user in users]
+        return (NO_ERR_RESP, False, results)
+```
+
 More details
 ============
 
