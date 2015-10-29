@@ -10,6 +10,12 @@ import six
 
 logger = logging.getLogger(__name__)
 
+try:
+    from django.forms.fields import RenameFieldMethods as UnhideableQuerysetTypeBase
+except ImportError:
+    UnhideableQuerysetTypeBase = type
+
+
 
 class AutoViewFieldMixin(object):
     """
@@ -283,7 +289,7 @@ class ModelResultJsonMixin(object):
         return (NO_ERR_RESP, has_more, res, )
 
 
-class UnhideableQuerysetType(type):
+class UnhideableQuerysetType(UnhideableQuerysetTypeBase):
     """
     This does some pretty nasty hacky stuff, to make sure users can
     also define ``queryset`` as class-level field variable, instead of
