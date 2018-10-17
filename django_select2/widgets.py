@@ -15,7 +15,7 @@ from django.core.validators import EMPTY_VALUES
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
-from django.utils.datastructures import MultiValueDict, MergeDict
+from django.utils.datastructures import MultiValueDict
 
 from .util import render_js_script, convert_to_js_string_arr, JSVar, JSFunction, JSFunctionInContext, \
     convert_dict_to_js_map, convert_to_js_arr, timer_start, timer_end
@@ -328,7 +328,7 @@ class MultipleSelect2HiddenInput(forms.TextInput):
         return mark_safe(s)
 
     def value_from_datadict(self, data, files, name):
-        if isinstance(data, (MultiValueDict, MergeDict)):
+        if isinstance(data, MultiValueDict):
             return data.getlist(name)
         return data.get(name, None)
 
