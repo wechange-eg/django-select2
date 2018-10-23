@@ -268,15 +268,15 @@ class Select2Widget(Select2Mixin, forms.Select):
     def init_options(self):
         self.options.pop('multiple', None)
 
-    def render_options(self, choices, selected_choices):
-        all_choices = chain(self.choices, choices)
+    def render_options(self, selected_choices):
+        all_choices = chain(self.choices, selected_choices)
         if not self.is_required and \
                 len([value for value, txt in all_choices if value == '']) == 0:
             # Checking if list already has empty choice as in the case of Model based Light fields.
 
-            choices = list(choices)
-            choices.append(('', '', ))  # Adding an empty choice
-        return super(Select2Widget, self).render_options(choices, selected_choices)
+            selected_choices = list(selected_choices)
+            selected_choices.append(('', '', ))  # Adding an empty choice
+        return super(Select2Widget, self).render_options(selected_choices)
 
 
 class Select2MultipleWidget(Select2Mixin, forms.SelectMultiple):
