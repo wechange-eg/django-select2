@@ -315,7 +315,7 @@ class MultipleSelect2HiddenInput(forms.TextInput):
     input_type = 'hidden'
 
     def render(self, name, value, attrs=None, choices=()):
-        attrs = self.build_attrs(attrs, multiple='multiple')
+        attrs = self.build_attrs(attrs, {'multiple': 'multiple'})
         s = six.text_type(super(MultipleSelect2HiddenInput, self).render(name, u"", attrs))
         id_ = attrs.get('id', None)
         if id_:
