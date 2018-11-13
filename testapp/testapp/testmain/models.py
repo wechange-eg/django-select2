@@ -35,8 +35,8 @@ class Dept(models.Model):
 class Employee(models.Model):
     name = models.CharField(max_length=30)
     salary = models.FloatField()
-    dept = models.ForeignKey(Dept)
-    manager = models.ForeignKey('Employee', null=True, blank=True)
+    dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
+    manager = models.ForeignKey('Employee', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return force_text(self.name)
@@ -85,5 +85,5 @@ class KeyValueMap(models.Model):
 @python_2_unicode_compatible
 class WordList(models.Model):
     kind = models.CharField(max_length=100)
-    word = models.ForeignKey(Word, null=True, blank=True, related_name='wordlist_word')
+    word = models.ForeignKey(Word, null=True, blank=True, related_name='wordlist_word', on_delete=models.CASCADE)
     words = models.ManyToManyField(Word, null=True, blank=True, related_name='wordlist_words')

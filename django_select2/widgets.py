@@ -14,7 +14,7 @@ from django import forms
 from django.core.validators import EMPTY_VALUES
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.datastructures import MultiValueDict
 
 from .util import render_js_script, convert_to_js_string_arr, JSVar, JSFunction, JSFunctionInContext, \
