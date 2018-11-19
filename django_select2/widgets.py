@@ -223,7 +223,7 @@ class Select2Mixin(object):
 
         return u'$("#%s").select2(%s);' % (id_, options)
 
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
         """
         Renders this widget. HTML and JS code blocks all are rendered by this.
 
@@ -314,7 +314,7 @@ class MultipleSelect2HiddenInput(forms.TextInput):
     # We want it hidden but should be treated as if is_hidden is False
     input_type = 'hidden'
 
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), renderer=None):
         attrs = self.build_attrs(attrs, {'multiple': 'multiple'})
         s = six.text_type(super(MultipleSelect2HiddenInput, self).render(name, u"", attrs))
         id_ = attrs.get('id', None)
@@ -376,7 +376,7 @@ class HeavySelect2Mixin(Select2Mixin):
         :type data_url: :py:obj:`str` or None
 
         .. tip:: When ``data_view`` is provided then it is converted into Url using
-            :py:func:`~django.core.urlresolvers.reverse`.
+            :py:func:`~django.urls.reverse`.
 
         .. warning:: Either of ``data_view`` or ``data_url`` must be specified, else :py:exc:`ValueError` would
             be raised.
